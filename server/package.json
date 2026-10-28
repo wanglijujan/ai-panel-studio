@@ -2,11 +2,13 @@
   "name": "ai-panel-server",
   "version": "0.1.0",
   "private": true,
-     "scripts": {
+   "scripts": {
     "dev": "tsx watch src/index.ts",
     "seed": "tsx src/db/seed.ts",
     "try:panelist": "tsx src/core/panelist.try.ts",
-    "try:scheduler": "tsx src/core/scheduler.try.ts"
+    "try:scheduler": "tsx src/core/scheduler.try.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",
@@ -21,6 +23,7 @@
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.5",
     "tsx": "^4.23.15",
-    "typescript": "^5.9.0"
+    "typescript": "^5.9.0",
+    "vitest": "^5.0.5"
   }
 }
