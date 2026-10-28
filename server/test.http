@@ -1,0 +1,15 @@
+@base = http://localhost:3001
+
+### 健康检查
+GET {{base}}/api/health
+
+### 讨论列表
+GET {{base}}/api/discussions
+
+### 创建讨论
+POST {{base}}/api/discussions
+Content-Type: application/json
+
+{"topic":"远程办公是否会降低团队创新力","expertCount":4}
+### 开始直播
+POST {{base}}/api/discussions/把刚才的id粘贴在这里/start
