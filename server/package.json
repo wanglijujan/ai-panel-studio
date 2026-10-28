@@ -2,10 +2,10 @@
   "name": "ai-panel-server",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
+    "scripts": {
     "dev": "tsx watch src/index.ts",
     "seed": "tsx src/db/seed.ts",
-    "inspect": "tsx src/db/inspect.ts"
+    "try:panelist": "tsx src/core/panelist.try.ts"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",
