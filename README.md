@@ -15,6 +15,17 @@
 - [验收步骤](#验收步骤)
 - [已完成与待改进](#已完成与待改进)
 
+## 文档索引
+
+| 文档 | 路径 | 内容 |
+|---|---|---|
+| PRD | [docs/PRD.md](docs/PRD.md) | 产品定位、用户画像、功能需求与技术约束 |
+| ER 图 | [docs/er.md](docs/er.md) | 数据模型（mermaid erDiagram），事件溯源设计 |
+| API 契约 | [docs/api.md](docs/api.md) | REST + SSE 接口定义与事件类型 |
+| Prompt 记录 | [docs/prompt-log.md](docs/prompt-log.md) | 5 段核心 Prompt，覆盖 SDD / PDD / TDD / E2E |
+| 工作流说明 | [docs/workflow.md](docs/workflow.md) | 开发过程、问题与解决路径、工程化思考 |
+
+
 ## 功能特性
 
 | 模块 | 说明 |
@@ -29,16 +40,24 @@
 | 实时推送 | SSE 事件流，支持断线重连补发 |
 | 多讨论隔离 | 所有数据按 `discussion_id` 隔离，可同时进行 |
 
+## 界面预览
+
+| 首页 | 直播间 |
+|---|---|
+| ![首页](docs/images/home.png) | ![直播间](docs/images/room.png) |
+
+
 ## 技术栈
 
-| 层 | 选型 | 说明 |
+| 层 | 选型 | 选择理由 / 权衡 |
 |---|---|---|
-| 前端 | React 19 + Vite + TypeScript + Tailwind CSS v4 | 三栏布局，各区域独立滚动 |
-| 后端 | Node.js + Express 5 + TypeScript | REST + SSE |
-| 数据库 | SQLite（better-sqlite3） | 零配置，文件级持久化 |
-| 校验 | Zod | 模型输出与请求体的结构校验 |
-| 模型 | DeepSeek（`deepseek-chat`） | OpenAI 兼容接口，支持 `response_format: json_object` |
-| 测试 | Vitest（单元）+ Playwright（E2E） | 纯逻辑与交互契约分层覆盖 |
+| 前端 | React 19 + Vite + TypeScript + Tailwind CSS v4 | Vite 冷启动快、开发反馈即时；Tailwind 适合三栏这种自定义布局，无需引入重型 UI 库 |
+| 后端 | Node.js + Express 5 + TypeScript | 与前端同语言，SSE 在 Node 上实现简单；Express 5 原生支持 async 错误传递 |
+| 数据库 | SQLite（better-sqlite3） | 单机演示场景零配置、文件级持久化；better-sqlite3 同步 API 避免回调节奏问题 |
+| 校验 | Zod | 模型输出不稳定，用 schema 在入口做强校验，非法即降级 |
+| 模型 | DeepSeek（deepseek-chat） | OpenAI 兼容接口，支持 `response_format: json_object`，便于结构化输出 |
+| 测试 | Vitest + Playwright | 纯逻辑与交互契约分层覆盖，单元测试快、E2E 验证真实渲染 |
+
 
 ## 项目结构
 
@@ -174,6 +193,19 @@ SSE 事件类型：`round_start`、`speech`、`agent_status`、`consensus_update
 rm server/data/panel.db    # Windows: Remove-Item .\server\data\panel.db
 cd server && npm run seed
 ```
+
+## 样例数据
+
+`npm run seed` 会写入以下 5 条讨论（其中 1 条已结束，可直接查看完整总结与共识/分歧）：
+
+| # | 议题 | 嘉宾阵容 | 状态 |
+|---|---|---|---|
+| 1 | （按 seed.ts 真实内容填） | 主持人 + N 位专家 | 已结束 |
+| 2 | … | … | 未开始 |
+| 3 | … | … | 未开始 |
+| 4 | … | … | 未开始 |
+| 5 | … | … | 未开始 |
+
 
 ## 测试
 
